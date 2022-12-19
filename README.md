@@ -1,4 +1,4 @@
-"# CompettiveProgram-Course-204355" <br>
+# CompettiveProgram-Course-204355 <br>
 Day 1 Math <br>
 Day 2 Math 2 <br>
 Day 3 Time Complexity <br>
