@@ -1,5 +1,5 @@
 "# CompettiveProgram-Course-204355" 
-Day 1 Math
+Day 1 Math <br>
 Day 2 Math 2
 Day 3 Time Complexity
 Day 4 Prime number and Sorting
