@@ -25,6 +25,10 @@ void buildCount(int node, int a, int b, int *counter, int *tree)
 void update(int node, int a, int b, int i, int j, int *tree, int *counter, int *lazy)
 {
     int left = node * 2, right = node * 2 + 1, mid = (a + b) / 2;
+
+    if (a >= i && b <= j)
+        lazy[node]++;
+
     lazy[node] %= 2;
 
     if (lazy[node])
@@ -38,26 +42,8 @@ void update(int node, int a, int b, int i, int j, int *tree, int *counter, int *
         lazy[node] = 0;
     }
 
-    if (a > b || a > j || i > b)
-    {
+    if (a > b || a > j || i > b || (a >= i && b <= j))
         return;
-    }
-
-    if (a >= i && b <= j)
-    {
-        lazy[node] += 1;
-        if (lazy[node])
-        {
-            tree[node] = counter[node] - tree[node];
-            if (a != b)
-            {
-                lazy[left] += 1;
-                lazy[right] += 1;
-            }
-            lazy[node] = 0;
-        }
-        return;
-    }
 
     update(left, a, mid, i, j, tree, counter, lazy);
     update(right, 1 + mid, b, i, j, tree, counter, lazy);
@@ -85,9 +71,7 @@ int query(int node, int a, int b, int i, int j, int *tree, int *counter, int *la
     }
 
     if (a >= i && b <= j)
-    {
         return tree[node];
-    }
 
     q1 = query(left, a, mid, i, j, tree, counter, lazy);
     q2 = query(right, 1 + mid, b, i, j, tree, counter, lazy);
@@ -99,13 +83,10 @@ int main()
 {
 
     int n, q;
-
     scanf("%d %d", &n, &q);
 
     int tree[500000], counter[500000], lazy[500000];
-
     fill(lazy, lazy + 500000, 0);
-
     buildCount(1, 0, n - 1, counter, tree);
 
     for (int i = 0; i < q; ++i)
@@ -115,13 +96,9 @@ int main()
         y--;
         z--;
         if (x == 0)
-        {
             update(1, 0, n - 1, y, z, tree, counter, lazy);
-        }
         else
-        {
             printf("%d\n", query(1, 0, n - 1, y, z, tree, counter, lazy));
-        }
     }
 
     return 0;
